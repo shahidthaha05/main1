@@ -32,6 +32,32 @@ def chrome_login(req):
     else:
         return render(req,'login.html')
     
+
+
+def chrome_login1(req):
+    if 'chrome' in req.session:
+        return redirect(home)
+    
+    if req.method=='POST':
+        uname=req.POST['uname']
+        password=req.POST['passwd']
+        data=authenticate(username=uname,password=password)
+        if data:
+            if data.is_superuser:
+                login(req,data)
+                req.session['chrome']=uname   #create session
+                return redirect(home)
+            else:
+                
+                login(req,data)
+                req.session['user']=uname   
+                return redirect(user_home)
+        else:
+            messages.warning(req,'Invalid username or password.')
+            return redirect(chrome_login)
+    else:
+        return render(req,'login.html')
+    
 def home(req):
     if 'chrome' in req.session:
         data=Product.objects.all()
