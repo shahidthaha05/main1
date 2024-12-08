@@ -10,6 +10,11 @@
         body {
             font-family: 'Arial', sans-serif;
             background-color: antiquewhite;
+            height: 80px;
+            background-image : url(../media/IMG_20241208_121023.jpg);
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,18 +23,20 @@
         }
 
         .login-container {
-            background: black;
+            background: white;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
             box-sizing: border-box;
+            margin-right: 1200px;
+            margin-bottom: 600px;
         }
 
         h2 {
             text-align: center;
-            color:white;
+            color:black;
             margin-bottom: 20px;
         }
 
@@ -51,18 +58,20 @@
         .btn {
             width: 100%;
             padding: 14px;
-            background-color: blue;
-            color: blue;
+            background-color: white;
+            color: white;
             border: none;
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            /* transition: background-color 0.3s; */
         }
 
         .btn:hover {
             background-color: #6a11cb;
         }
+
+
 
         .footer {
             text-align: center;
@@ -85,16 +94,17 @@
                 width: 90%;
             }
         }
+
     </style>
 </head>
-<body>
+<body >
     <div class="login-container">
         <h2>Login</h2>
         <form action="#" method="POST">
             {% csrf_token %}
             <input type="text" class="input-field" name="uname" placeholder="Username" required>
             <input type="password" class="input-field" name="passwd" placeholder="Password" required>
-            <button type="submit" class="btn">Login</button>
+            <button type="submit"  class="btn" >Login</button>
         </form>
         <div class="footer">
             <p> Don't have an account ? <a href="register">Register</a></p>
@@ -108,9 +118,9 @@
             {% endfor %}
             {% endif %}
         </div>
-        <div class="carousel-item active" data-bs-interval="10000">
-            <img src="../media/chr.png" class="d-block w-100" height="600px"  width="100px" alt="...">
-          </div>
+        <!-- <div class="carousel-item active" data-bs-interval="10000">
+            <img src="../media/IMG_1467.JPG" class="d-block w-100" height="600px"  width="50px" alt="...">
+          </div> -->
     </div>
 </body>
 </html>
