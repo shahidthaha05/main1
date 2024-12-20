@@ -43,6 +43,13 @@
                 <s><h6>₹{{i.product.price}}</h6></s>
                 <h3>₹{{i.product.offer_price}}</h3>
                 <p>{{i.product.dis}}</p>
+                <label for="size">Size:</label>
+                <select id="size" name="size">
+                  <option value="small">S</option>
+                  <option value="medium" selected>M</option>
+                  <option value="large">L</option>
+                  <option value="extralarge">xL</option>
+                </select>
                 <a href="delete_cart/{{i.pk}}" class="btn btn-dark">Remove</a>
                 <a href="user_buy/{{i.pk}}" class="btn btn-dark">buy</a>
 
