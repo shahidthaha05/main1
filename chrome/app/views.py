@@ -190,7 +190,7 @@ def user_buy(req,cid):
 def user_buy1(req,pid):
     user=User.objects.get(username=req.session['user'])
     product=Product.objects.get(pk=pid)
-    price=product.ofr_price
+    price=product.offer_price
     buy=Buy.objects.create(user=user,product=product,price=price)
     buy.save()
     return redirect(user_home)

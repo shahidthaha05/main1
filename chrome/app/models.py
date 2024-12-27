@@ -8,7 +8,8 @@ class Product(models.Model):
     price=models.IntegerField()
     offer_price=models.IntegerField()
     img=models.FileField()
-    dis=models.CharField(max_length=150)
+    dis=models.TextField()
+    
     
 
 class Cart(models.Model):
