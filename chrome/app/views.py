@@ -58,10 +58,18 @@ def chrome_login1(req):
     else:
         return render(req,'login.html')
     
+    
 def home(req):
     if 'chrome' in req.session:
         data=Product.objects.all()
         return render(req,'shop/home.html',{'data':data})
+    else:
+        return redirect(chrome_login)
+
+def intro(req):
+    if 'chrome' in req.session:
+        data=Product.objects.all()
+        return render(req,'shop/intro.html',{'data':data})
     else:
         return redirect(chrome_login)
     

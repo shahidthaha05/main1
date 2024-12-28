@@ -4,6 +4,7 @@ urlpatterns=[
     path('',views.chrome_login),
     path('chrome_login1',views.chrome_login),
     path('home',views.home),
+    path('intro',views.intro),
     path('chrome_logout',views.chrome_logout),
     path('add_prod',views.add_prod),
     path('edit/<pid>',views.edit),
