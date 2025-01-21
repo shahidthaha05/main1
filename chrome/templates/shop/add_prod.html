@@ -50,6 +50,23 @@
             <label for="dis" class="form-label">Discription:</label>
             <input type="text" class="form-control" placeholder="Discription" name="dis">
           </div>
+          <!-- <label for="size">Size:</label>
+              <select name="size" id="size">
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+              </select> -->
+
+
+
+              <label for="sizes">Select Sizes</label>
+              <select name="sizes" multiple required>
+                  {% for size in all_sizes %}
+                      <option value="{{ size.size }}">{{ size.size }}</option>
+                  {% endfor %}
+              </select>
+
           
           <div>
             <a type="submit" href="home" class="btn btn-warning">HOME</a>

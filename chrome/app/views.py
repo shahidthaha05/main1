@@ -1,9 +1,26 @@
-from django.shortcuts import render,redirect
+# from django.shortcuts import render,redirect
+# from django.contrib.auth import authenticate,login,logout
+# from .models import *
+# import os
+# from django.contrib.auth.models import *
+# from django.contrib import messages
+
+
+from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth import authenticate,login,logout
 from .models import *
 import os
 from django.contrib.auth.models import *
 from django.contrib import messages
+from django.http import HttpResponse
+from .models import Product
+# from .forms import CustomPasswordResetForm
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView
+
+from django.contrib.auth.forms import AuthenticationForm
+
+# from .forms import LoginForm, CustomPasswordResetForm
+
 
 
 # Create your views here.
@@ -87,12 +104,23 @@ def add_prod(req):
             ofr_price=req.POST['ofr_price']
             dis=req.POST['dis']
             img=req.FILES['img']
+            size = req.POST.getlist('size')
             
-            data=Product.objects.create(pro_id=prd_id,name=prd_name,price=prd_price,offer_price=ofr_price,dis=dis,img=img)
-            data.save()
+            data=Product.objects.create(pro_id=prd_id,name=prd_name,price=prd_price,offer_price=ofr_price,dis=dis,img=img,size=size)
+    #         data.save()
+    #         return redirect(add_prod)
+    #     else:
+    #         return render(req,'shop/add_prod.html')
+    # else:
+    #     return redirect(chrome_login)
+            for size in size:
+                size_obj, created = Size.objects.get_or_create(size=size)
+                Product.sizes.add(size_obj)
+
             return redirect(add_prod)
         else:
-            return render(req,'shop/add_prod.html')
+            all_sizes = Size.objects.all()
+            return render(req, 'shop/add_prod.html', {'all_sizes': all_sizes})
     else:
         return redirect(chrome_login)
     
@@ -104,14 +132,15 @@ def edit(req,pid):
             prd_price=req.POST['prd_price']
             ofr_price=req.POST['ofr_price']
             dis=req.POST['dis']
+            size = req.POST.getlist('size')
             img=req.FILES.get('img')
             if img:
-                Product.objects.filter(pk=pid).update(pro_id=prd_id,name=prd_name,price=prd_price,offer_price=ofr_price,dis=dis)
+                Product.objects.filter(pk=pid).update(pro_id=prd_id,name=prd_name,price=prd_price,offer_price=ofr_price,dis=dis,size=size)
                 data=Product.objects.get(pk=pid)
                 data.img=img
                 data.save()
             else:
-                Product.objects.filter(pk=pid).update(pro_id=prd_id,name=prd_name,price=prd_price,offer_price=ofr_price,dis=dis)
+                Product.objects.filter(pk=pid).update(pro_id=prd_id,name=prd_name,price=prd_price,offer_price=ofr_price,dis=dis,size=size)
             return redirect(home)
         else:
             data=Product.objects.get(pk=pid)
