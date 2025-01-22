@@ -97,56 +97,82 @@ def chrome_logout(req):
 
 def add_prod(req):
     if 'chrome' in req.session:
-        if req.method=='POST':
-            prd_id=req.POST['prd_id']
-            prd_name=req.POST['prd_name']
-            prd_price=req.POST['prd_price']
-            ofr_price=req.POST['ofr_price']
-            dis=req.POST['dis']
-            img=req.FILES['img']
-            size = req.POST.getlist('size')
+        if req.method == 'POST':
+            prd_id = req.POST['prd_id']
+            prd_name = req.POST['prd_name']
+            prd_price = req.POST['prd_price']
+            ofr_price = req.POST['ofr_price']
+            dis = req.POST['dis']
+            size = req.POST['size']  # Corrected to use square brackets
+            img = req.FILES['img']
             
-            data=Product.objects.create(pro_id=prd_id,name=prd_name,price=prd_price,offer_price=ofr_price,dis=dis,img=img,size=size)
-    #         data.save()
-    #         return redirect(add_prod)
-    #     else:
-    #         return render(req,'shop/add_prod.html')
-    # else:
-    #     return redirect(chrome_login)
-            for size in size:
-                size_obj, created = Size.objects.get_or_create(size=size)
-                Product.sizes.add(size_obj)
-
+            data = Product.objects.create(
+                pro_id=prd_id,
+                name=prd_name,
+                price=prd_price,
+                offer_price=ofr_price,
+                dis=dis,
+                img=img,
+                size=size  # Added size field
+            )
+            data.save()
             return redirect(add_prod)
         else:
-            all_sizes = Size.objects.all()
-            return render(req, 'shop/add_prod.html', {'all_sizes': all_sizes})
+            return render(req, 'shop/add_prod.html')
     else:
         return redirect(chrome_login)
-    
-def edit(req,pid):
+
+
+
+
+
+
+def edit(req, pid):
     if 'chrome' in req.session:
-        if req.method=='POST':
-            prd_id=req.POST['prd_id']
-            prd_name=req.POST['prd_name']
-            prd_price=req.POST['prd_price']
-            ofr_price=req.POST['ofr_price']
-            dis=req.POST['dis']
-            size = req.POST.getlist('size')
-            img=req.FILES.get('img')
+        if req.method == 'POST':
+            prd_id = req.POST['prd_id']
+            prd_name = req.POST['prd_name']
+            prd_price = req.POST['prd_price']
+            ofr_price = req.POST['ofr_price']
+            dis = req.POST['dis']
+            size = req.POST['size']  # Corrected to use square brackets
+            img = req.FILES.get('img')
+
             if img:
-                Product.objects.filter(pk=pid).update(pro_id=prd_id,name=prd_name,price=prd_price,offer_price=ofr_price,dis=dis,size=size)
-                data=Product.objects.get(pk=pid)
-                data.img=img
+                Product.objects.filter(pk=pid).update(
+                    pro_id=prd_id,
+                    name=prd_name,
+                    price=prd_price,
+                    offer_price=ofr_price,
+                    dis=dis,
+                    size=size  # Added size field
+                )
+                data = Product.objects.get(pk=pid)
+                data.img = img
                 data.save()
             else:
-                Product.objects.filter(pk=pid).update(pro_id=prd_id,name=prd_name,price=prd_price,offer_price=ofr_price,dis=dis,size=size)
+                Product.objects.filter(pk=pid).update(
+                    pro_id=prd_id,
+                    name=prd_name,
+                    price=prd_price,
+                    offer_price=ofr_price,
+                    dis=dis,
+                    size=size  # Added size field
+                )
             return redirect(home)
         else:
-            data=Product.objects.get(pk=pid)
-            return render(req,'shop/edit.html',{'product':data})
+            data = Product.objects.get(pk=pid)
+            return render(req, 'shop/edit.html', {'product': data})
     else:
         return redirect(chrome_login)
+
+
+
+
+
+
+
+
 
 def delete(req,pid):
     data=Product.objects.get(pk=pid)
@@ -194,6 +220,9 @@ def user_home(req):
 def view_pro(req,pid):
     data=Product.objects.get(pk=pid)
     return render(req,'user/view_pro.html',{'data':data})
+
+
+
 
 def add_to_cart(req,pid):
     prod=Product.objects.get(pk=pid)
